@@ -1,0 +1,84 @@
+/etc/profile
+
+export MAVEN_HOME=/home/zhou/workspace/program/maven/apache-maven-3.5.3
+PATH=$MAVEN_HOME/bin:$PATH
+
+export M2_HOME=/home/zhou/workspace/program/maven/apache-maven-3.5.3
+export CLASSPATH=$CLASSPATH:$M2_HOME/lib
+export PATH=$PATH:$M2_HOME/bin
+
+重启系统或者 命令行输入    source /etc/profile
+
+验证 环境变量是否成功:
+   	 
+   	  echo $MAVEN_HOME
+   	  echo $PATH
+   	  
+   	  
+ 验证 maven配置是否成功 
+ 			
+ 	mvn  -v  	
+ 	
+ 	
+ 	
+ 修改maven源为阿里云，以及仓库默认存放路径,这样maven下载jar包的速度会快很多。
+打开maven的配置文件
+
+sudo gedit /home/zhou/workspace/program/maven/apache-maven-3.5.3/conf/settings.xml
+
+
+在文件$MAVEN_HOME/conf/settings.xml的localRepository的开头添加一行：
+
+<localRepository>/home/gzx/Documents/Program/maven_localRepository</localRepository>
+
+仓库所在地的路径配置:
+具体如下:
+ |-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <!-- localRepository
+   | The path to the local repository maven will use to store artifacts.
+   |
+   | Default: ${user.home}/.m2/repository
+  <localRepository>/path/to/local/repo</localRepository>
+  -->
+  <!--peizh -->
+  
+  
+ #######重点分割线 ##########
+  	配置本地仓库的路径
+  
+  <localRepository>/home/zhou/workspace/program/maven/repository</localRepository>
+
+########################
+
+
+下载源的配置 此处配置的是阿里云的 下载源
+
+<mirrors>
+
+    <!-- mirror
+     | Specifies a repository mirror site to use instead of a given repository. The repository that
+     | this mirror serves has an ID that matches the mirrorOf element of this mirror. IDs are used
+     | for inheritance and direct lookup purposes, and must be unique across the set of mirrors.
+     |
+    <mirror>
+      <id>mirrorId</id>
+      <mirrorOf>repositoryId</mirrorOf>
+      <name>Human Readable Name for this Mirror.</name>
+      <url>http://my.repository.com/repo/path</url>
+    </mirror>
+     -->
+     
+     <mirror>
+     	<id>nexus-aliyun</id>
+     	<mirrorOf>central</mirrorOf>
+     	<name>Nexus aliyun</name>
+     	<url>>http://maven.aliyun.com/nexus/content/groups/public</url>
+     </mirror>
+     
+  </mirrors>
+
+
+ 	  
